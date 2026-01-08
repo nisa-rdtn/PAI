@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Madrasah Online</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .setup-screen,
+        .quiz-screen,
+        .result-screen {
+            display: none;
+            text-align: center;
+        }
+
+        .active-screen {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .level-btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-select {
+            padding: 1rem 2rem;
+            border: 2px solid var(--primary);
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: var(--font-latin-heading);
+            font-weight: 600;
+            transition: all 0.3s;
+            min-width: 150px;
+        }
+
+        .btn-select:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-select.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary-dark);
+        }
+
+        .question-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-soft);
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .q-number {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .q-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .option-btn {
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            background: white;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary-light);
+            background: #f0fdf4;
+        }
+
+        .option-btn.correct {
+            background: #dcfce7;
+            border-color: #22c55e;
+            color: #166534;
+        }
+
+        .option-btn.wrong {
+            background: #fee2e2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        .score-display {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 2rem 0;
+        }
+
+        .score-msg {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="index.html" class="back-nav"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
+        <div class="brand">
+            <h1>Uji Pemahamanmu</h1>
+            <p>Pilih Pelajaran & Tingkat Kesulitan</p>
+        </div>
+    </header>
+
+    <div class="quiz-container">
+
+        <!-- Screen 1: Setup -->
+        <div id="setup-screen" class="setup-screen active-screen">
+            <h2 style="color: var(--primary-dark);">Mulai Kuis</h2>
+            <p>Pilih mata pelajaran:</p>
+            <div class="level-btn-group">
+                <button class="btn-select subject-select" data-val="arab">Bahasa Arab</button>
+                <button class="btn-select subject-select" data-val="tajwid">Tajwid</button>
+                <button class="btn-select subject-select" data-val="nahwu">Nahwu Sharaf</button>
+            </div>
+
+            <div id="level-selection" style="display:none; margin-top: 2rem;">
+                <p>Pilih Tingkat Kesulitan:</p>
+                <div class="level-btn-group">
+                    <button class="btn-select level-select" style="border-color: #22c55e; color: #166534;"
+                        data-val="easy">Mudah</button>
+                    <button class="btn-select level-select" style="border-color: #eab308; color: #854d0e;"
+                        data-val="medium">Sedang</button>
+                    <button class="btn-select level-select" style="border-color: #ef4444; color: #991b1b;"
+                        data-val="hard">Sulit</button>
+                </div>
+            </div>
+
+            <button id="btn-start" class="btn-select"
+                style="margin-top: 3rem; background: var(--primary-dark); color: white; border: none; display:none;">Mulai
+                Mengerjakan</button>
+        </div>
+
+        <!-- Screen 2: Quiz -->
+        <div id="quiz-screen" class="quiz-screen">
+            <div class="question-card">
+                <span id="q-progress" class="q-number">Pertanyaan 1/7</span>
+                <h3 id="q-text" class="q-text">Loading...</h3>
+                <div id="options-container" class="options-grid">
+                    <!-- Options injected here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 3: Result -->
+        <div id="result-screen" class="result-screen">
+            <h2>Kuis Selesai! 🎉</h2>
+            <div class="score-display"><span id="final-score">0</span>%</div>
+            <p id="final-msg" class="score-msg">Luar biasa!</p>
+            <div style="margin-top: 2rem;">
+                <button onclick="location.reload()" class="btn-select"
+                    style="background: var(--primary); color: white;">Coba Lagi</button>
+                <a href="index.html" class="btn-select"
+                    style="background: transparent; border-color: #ddd; color: #666; display:inline-block; text-decoration: none;">Ke
+                    Beranda</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/quiz-data.js"></script>
+    <script src="js/quiz.js"></script>
+</body>
+
+</html>

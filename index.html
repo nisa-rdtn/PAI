@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madrasah Online - Belajar Ilmu Agama Islam</title>
+    <!-- FIX: GitHub Pages Audio Issue. This prevents referrer blocking by Google TTS. -->
+    <meta name="referrer" content="no-referrer">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Unified CSS -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap');
+
+        :root {
+            --primary: #00695c;
+            --primary-dark: #004d40;
+            --primary-light: #4db6ac;
+            --accent-gold: #d4af37;
+            --accent-blue: #1e293b;
+            --bg-body: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --font-latin-heading: 'Poppins', sans-serif;
+            --font-latin-body: 'Lora', serif;
+            --font-arabic: 'Amiri', serif;
+            --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-latin-body);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            background-image: radial-gradient(circle at 100% 100%, rgba(212, 175, 55, 0.05) 0, transparent 10px), radial-gradient(circle at 0 0, rgba(0, 105, 92, 0.05) 0, transparent 10px);
+            background-size: 40px 40px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* SPA View Logic */
+        .spa-view {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+            min-height: 100vh;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .spa-view.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header & Nav */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: repeating-linear-gradient(45deg, var(--accent-gold), var(--accent-gold) 10px, transparent 10px, transparent 20px);
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+        }
+
+        header h1 {
+            font-family: var(--font-latin-heading);
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .back-nav {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            color: white;
+            text-decoration: none;
+            font-family: var(--font-latin-heading);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-nav:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        @media (max-width: 600px) {
+            .back-nav {
+                position: relative;
+                top: 0;
+                left: 0;
+                transform: none;
+                display: inline-flex;
+                margin-top: 1rem;
+            }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--accent-gold);
+        }
+
+        .card-header {
+            height: 120px;
+            background: var(--bg-body);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            z-index: 1;
+        }
+
+        .card-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background: radial-gradient(circle, var(--primary) 2px, transparent 2.5px);
+            background-size: 20px 20px;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card h3 {
+            font-family: var(--font-latin-heading);
+            font-size: 1.25rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Lesson Content */
+        .lesson-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-soft);
+            border-right: 4px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .lesson-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+
+        .lesson-title {
+            font-family: var(--font-latin-heading);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Audio Button */
+        .audio-control {
+            background: var(--bg-body);
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            padding: 5px 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+            font-family: var(--font-latin-heading);
+            outline: none;
+        }
+
+        .audio-control:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Vocab Styling */
+        .vocab-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .vocab-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f9f9f9;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            transition: background 0.2s;
+        }
+
+        .vocab-row:hover {
+            background: #f0fdf4;
+            border-color: var(--primary-light);
+        }
+
+        .vocab-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .vocab-arabic {
+            font-family: var(--font-arabic);
+            font-size: 1.6rem;
+            color: var(--primary-dark);
+            line-height: 1.2;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .vocab-mean {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-align: right;
+        }
+
+        .btn-play-small {
+            background: white;
+            border: 1px solid #ddd;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--primary);
+            margin-right: 12px;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            outline: none;
+        }
+
+        .btn-play-small:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-play-small.playing {
+            background: var(--accent-gold);
+            color: white;
+            border-color: var(--accent-gold);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 6px rgba(0, 0, 0, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+            }
+        }
+
+        /* General Arabic Text (Nahwu/Tajwid) */
+        .arabic-text {
+            font-family: var(--font-arabic);
+            font-size: 2.2rem;
+            color: var(--primary-dark);
+            text-align: right;
+            direction: rtl;
+            line-height: 1.8;
+            margin: 0.5rem 0;
+        }
+
+        .tajwid-text {
+            font-family: var(--font-arabic);
+            font-size: 2.5rem;
+            text-align: center;
+            direction: rtl;
+            line-height: 2;
+        }
+
+        /* Tajwid Rules */
+        .tajwid-rule {
+            position: relative;
+            cursor: help;
+            padding: 0 2px;
+            border-radius: 4px;
+        }
+
+        .rule-ghunnah {
+            color: #d81b60;
+            background: rgba(216, 27, 96, 0.1);
+        }
+
+        .rule-idgham {
+            color: #1e88e5;
+            background: rgba(30, 136, 229, 0.1);
+        }
+
+        .rule-ikhfa {
+            color: #43a047;
+            background: rgba(67, 160, 71, 0.1);
+        }
+
+        .rule-mad {
+            color: #f9a825;
+            background: rgba(249, 168, 37, 0.1);
+        }
+
+        .rule-qalqalah {
+            color: #8e24aa;
+            background: rgba(142, 36, 170, 0.1);
+        }
+
+        .analysis-box {
+            background: #f1f8e9;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .analysis-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--primary);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        /* Quiz Specific */
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .setup-screen,
+        .quiz-screen,
+        .result-screen {
+            display: none;
+            text-align: center;
+        }
+
+        .active-screen {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .level-btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-select {
+            padding: 1rem 2rem;
+            border: 2px solid var(--primary);
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: var(--font-latin-heading);
+            font-weight: 600;
+            transition: all 0.3s;
+            min-width: 150px;
+        }
+
+        .btn-select:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-select.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary-dark);
+        }
+
+        .question-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-soft);
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .q-number {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .q-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .option-btn {
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            background: white;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary-light);
+            background: #f0fdf4;
+        }
+
+        .option-btn.correct {
+            background: #dcfce7;
+            border-color: #22c55e;
+            color: #166534;
+        }
+
+        .option-btn.wrong {
+            background: #fee2e2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        .score-display {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 2rem 0;
+        }
+
+        .score-msg {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        footer {
+            background: var(--primary-dark);
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+
+        footer .ornament {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- VIEW: HOME -->
+    <div id="v-home" class="spa-view active">
+        <header>
+            <div class="brand">
+                <div class="logo-icon">🕌</div>
+                <h1>Madrasah Online</h1>
+                <p>Belajar Ilmu Dasar Islam Kapan Saja</p>
+            </div>
+        </header>
+
+        <div class="container">
+            <section style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="font-family: var(--font-latin-heading); color: var(--primary-dark);">Selamat Datang, Penuntut
+                    Ilmu</h2>
+                <p style="color: var(--text-muted);">"Barangsiapa menempuh jalan untuk menuntut ilmu, Allah akan
+                    mudahkan baginya jalan menuju Surga." (HR. Muslim)</p>
+            </section>
+            <div class="card-grid">
+                <a href="#" onclick="navigate('arab'); return false;" class="card">
+                    <div class="card-header"><span class="card-pattern"></span><i
+                            class="fa-solid fa-language card-icon"></i></div>
+                    <div class="card-body">
+                        <h3>Bahasa Arab Dasar</h3>
+                        <p>Pelajari kosakata sehari-hari.</p>
+                    </div>
+                </a>
+                <a href="#" onclick="navigate('tajwid'); return false;" class="card">
+                    <div class="card-header"><span class="card-pattern"></span><i
+                            class="fa-solid fa-book-quran card-icon"></i></div>
+                    <div class="card-body">
+                        <h3>Tajwid Dasar</h3>
+                        <p>Panduan membaca Al-Qur'an.</p>
+                    </div>
+                </a>
+                <a href="#" onclick="navigate('nahwu'); return false;" class="card">
+                    <div class="card-header"><span class="card-pattern"></span><i
+                            class="fa-solid fa-shapes card-icon"></i></div>
+                    <div class="card-body">
+                        <h3>Nahwu & Sharaf</h3>
+                        <p>Dasar tata bahasa Arab.</p>
+                    </div>
+                </a>
+                <a href="#" onclick="navigate('quiz'); return false;" class="card"
+                    style="border-top: 4px solid var(--accent-gold);">
+                    <div class="card-header" style="background: linear-gradient(135deg, var(--accent-gold), #b89628);">
+                        <i class="fa-solid fa-clipboard-question card-icon" style="color: white;"></i>
+                    </div>
+                    <div class="card-body">
+                        <h3>Uji Pemahaman</h3>
+                        <p>Tes wawasanmu (Kuis).</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <footer><span class="ornament">✨</span>
+            <p><small>&copy; 2026 Madrasah Online</small></p>
+        </footer>
+    </div>
+
+    <!-- VIEW: ARAB -->
+    <div id="v-arab" class="spa-view">
+        <header>
+            <a href="#" onclick="navigate('home'); return false;" class="back-nav"><i
+                    class="fa-solid fa-arrow-left"></i> Kembali</a>
+            <div class="brand">
+                <h1>Kamus Saku Bahasa Arab</h1>
+                <p>100+ Kosakata</p>
+            </div>
+        </header>
+        <div class="container">
+            <!-- 1. Salam -->
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">1. Salam & Sapaan</span><button
+                        class="audio-control audio-btn">🔊 Dengar Semua</button></div>
+                <div class="vocab-list">
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">السَّلَامُ عَلَيْكُمْ</span><span
+                                class="vocab-mean">Assalamu’alaikum</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">وَعَلَيْكُمُ السَّلَام</span><span
+                                class="vocab-mean">Wa'alaikumussalam</span></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 2. Waktu -->
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">2. Sapaan Waktu</span><button
+                        class="audio-control audio-btn">🔊 Dengar Semua</button></div>
+                <div class="vocab-list">
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">صَبَاحُ الْخَيْرِ</span><span
+                                class="vocab-mean">Selamat Pagi</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">مَسَاءُ الْخَيْرِ</span><span
+                                class="vocab-mean">Selamat Sore</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">لَيْلَةٌ سَعِيْدَةٌ</span><span
+                                class="vocab-mean">Selamat Malam</span></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 3. Angka -->
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">3. Angka (1-5)</span><button
+                        class="audio-control audio-btn">Dengar Semua</button></div>
+                <div class="vocab-list">
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">وَاحِدٌ</span><span
+                                class="vocab-mean">Satu (1)</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">اِثْنَانِ</span><span
+                                class="vocab-mean">Dua (2)</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">ثَلَاثَةٌ</span><span
+                                class="vocab-mean">Tiga (3)</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">أَرْبَعَةٌ</span><span
+                                class="vocab-mean">Empat (4)</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">خَمْسَةٌ</span><span
+                                class="vocab-mean">Lima (5)</span></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 4. Warna -->
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">4. Warna</span><button
+                        class="audio-control audio-btn">Dengar Semua</button></div>
+                <div class="vocab-list">
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">أَحْمَرُ</span><span
+                                class="vocab-mean">Merah</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">أَبْيَضُ</span><span
+                                class="vocab-mean">Putih</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">أَسْوَدُ</span><span
+                                class="vocab-mean">Hitam</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">أَزْرَقُ</span><span
+                                class="vocab-mean">Biru</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">أَخْضَرُ</span><span
+                                class="vocab-mean">Hijau</span></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 5. Kerja -->
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">5. Aktivitas</span><button
+                        class="audio-control audio-btn">Dengar Semua</button></div>
+                <div class="vocab-list">
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">أَكَلَ</span><span
+                                class="vocab-mean">Makan</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">شَرِبَ</span><span
+                                class="vocab-mean">Minum</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">نَامَ</span><span
+                                class="vocab-mean">Tidur</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">ذَهَبَ</span><span
+                                class="vocab-mean">Pergi</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">رَجَعَ</span><span
+                                class="vocab-mean">Pulang</span></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 6. Belajar -->
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">6. Belajar</span><button
+                        class="audio-control audio-btn">Dengar Semua</button></div>
+                <div class="vocab-list">
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">قَرَأَ</span><span
+                                class="vocab-mean">Membaca</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">كَتَبَ</span><span
+                                class="vocab-mean">Menulis</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">سَمِعَ</span><span
+                                class="vocab-mean">Mendengar</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">تَكَلَّمَ</span><span
+                                class="vocab-mean">Berbicara</span></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 7. Ibadah -->
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">7. Ibadah</span><button
+                        class="audio-control audio-btn">Dengar Semua</button></div>
+                <div class="vocab-list">
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">صَلَّى</span><span
+                                class="vocab-mean">Sholat</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">صَامَ</span><span
+                                class="vocab-mean">Puasa</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">دَعَا</span><span
+                                class="vocab-mean">Berdoa</span></div>
+                    </div>
+                    <div class="vocab-row"><button class="btn-play-small"><i class="fa-solid fa-play"></i></button>
+                        <div class="vocab-content"><span class="vocab-arabic">ذَكَرَ</span><span
+                                class="vocab-mean">Berdzikir</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer><span class="ornament">✨</span>
+            <p><small>&copy; 2026 Madrasah Online</small></p>
+        </footer>
+    </div>
+
+    <!-- VIEW: TAJWID -->
+    <div id="v-tajwid" class="spa-view">
+        <header>
+            <a href="#" onclick="navigate('home'); return false;" class="back-nav"><i
+                    class="fa-solid fa-arrow-left"></i> Kembali</a>
+            <div class="brand">
+                <h1>Ilmu Tajwid Dasar</h1>
+                <p>Panduan Membaca Al-Qur'an</p>
+            </div>
+        </header>
+        <div class="container">
+            <div class="legend-box">
+                <div class="legend-item"><span class="dot" style="background:var(--primary)"></span> Ikhfa (Samar)</div>
+                <div class="legend-item"><span class="dot" style="background:#1e88e5"></span> Idgham (Lebur)</div>
+                <div class="legend-item"><span class="dot" style="background:#d81b60"></span> Ghunnah (Dengung)</div>
+                <div class="legend-item"><span class="dot" style="background:#f9a825"></span> Mad (Panjang)</div>
+                <div class="legend-item"><span class="dot" style="background:#8e24aa"></span> Qalqalah (Pantul)</div>
+            </div>
+            <!-- Lessons -->
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">1. Izhhar Halqi</span><button
+                        class="audio-control audio-btn">▶️ Putar</button></div>
+                <div class="lesson-content">
+                    <p>Dibaca Jelas.</p>
+                    <h2 class="tajwid-text">1. مِنْ خَوْفٍ</h2>
+                    <h2 class="tajwid-text" style="font-size: 2rem;">2. مَنْ آمَنَ</h2>
+                    <h2 class="tajwid-text" style="font-size: 2rem;">3. مِنْ عَلَقٍ</h2>
+                </div>
+            </div>
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">2. Idgham Bighunnah</span><button
+                        class="audio-control audio-btn">▶️ Putar</button></div>
+                <div class="lesson-content">
+                    <p>Lebur dengan Dengung.</p>
+                    <h2 class="tajwid-text">1. <span class="tajwid-rule rule-idgham">مَن يَ</span>قُولُ</h2>
+                    <h2 class="tajwid-text" style="font-size: 2rem;">2. مِمَّن <span
+                            class="tajwid-rule rule-idgham">مَّ</span>نَعَ</h2>
+                    <h2 class="tajwid-text" style="font-size: 2rem;">3. مِّن <span
+                            class="tajwid-rule rule-idgham">وَّ</span>رَائِهِم</h2>
+                </div>
+            </div>
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">3. Idgham Bilaghunnah</span><button
+                        class="audio-control audio-btn">▶️ Putar</button></div>
+                <div class="lesson-content">
+                    <p>Lebur Tanpa Dengung.</p>
+                    <h2 class="tajwid-text">1. <span class="tajwid-rule rule-idgham">مِن رَّ</span>بِّهِمْ</h2>
+                    <h2 class="tajwid-text" style="font-size: 2rem;">2. غَفُورٌ <span
+                            class="tajwid-rule rule-idgham">رَّ</span>حِيمٌ</h2>
+                </div>
+            </div>
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">4. Iqlab</span><button
+                        class="audio-control audio-btn">▶️ Putar</button></div>
+                <div class="lesson-content">
+                    <p>Ganti Bunyi Mim.</p>
+                    <h2 class="tajwid-text">1. <span class="tajwid-rule rule-ghunnah">مِنۢ بَ</span>عْدِ</h2>
+                    <h2 class="tajwid-text" style="font-size: 2rem;">2. سَمِيعٌ<span class="tajwid-rule rule-ghunnah">ۢ
+                            بَ</span>صِيرٌ</h2>
+                </div>
+            </div>
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">5. Ikhfa Haqiqi</span><button
+                        class="audio-control audio-btn">▶️ Putar</button></div>
+                <div class="lesson-content">
+                    <p>Samar.</p>
+                    <h2 class="tajwid-text">1. <span class="tajwid-rule rule-ikhfa">أَنفُ</span>سَهُمْ</h2>
+                    <h2 class="tajwid-text" style="font-size: 2rem;">2. <span class="tajwid-rule rule-ikhfa">مِن
+                            قَ</span>بْلِ</h2>
+                    <h2 class="tajwid-text" style="font-size: 2rem;">3. <span
+                            class="tajwid-rule rule-ikhfa">كُنتُ</span>مْ</h2>
+                </div>
+            </div>
+        </div>
+        <footer><span class="ornament">✨</span>
+            <p><small>&copy; 2026 Madrasah Online</small></p>
+        </footer>
+    </div>
+
+    <!-- VIEW: NAHWU -->
+    <div id="v-nahwu" class="spa-view">
+        <header>
+            <a href="#" onclick="navigate('home'); return false;" class="back-nav"><i
+                    class="fa-solid fa-arrow-left"></i> Kembali</a>
+            <div class="brand">
+                <h1>Nahwu & Sharaf Dasar</h1>
+                <p>Kaidah Tata Bahasa</p>
+            </div>
+        </header>
+        <div class="container">
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">1. Tiga Komponen Kata</span><button
+                        class="audio-control audio-btn">▶️ Putar</button></div>
+                <div class="lesson-content">
+                    <h2 class="arabic-text">اِسْمٌ — فِعْلٌ — حَرْفٌ</h2>
+                    <div class="analysis-box">
+                        <p>Isim (Benda), Fi'il (Kerja), Harf (Tugas)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">2. Kalimat Sempurna</span><button
+                        class="audio-control audio-btn">▶️ Putar</button></div>
+                <div class="lesson-content">
+                    <h2 class="arabic-text">ذَهَبَ زَيْدٌ إِلَى الْمَسْجِدِ</h2>
+                    <p class="translation">Zaid telah pergi ke masjid.</p>
+                </div>
+            </div>
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">3. Mubtada & Khobar</span><button
+                        class="audio-control audio-btn">▶️ Putar</button></div>
+                <div class="lesson-content">
+                    <h2 class="arabic-text">الْبَيْتُ كَبِيرٌ</h2>
+                    <p class="translation">Rumah itu besar.</p>
+                </div>
+            </div>
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">4. Fi'il & Fa'il</span><button
+                        class="audio-control audio-btn">▶️ Putar</button></div>
+                <div class="lesson-content">
+                    <h2 class="arabic-text">جَلَسَ الطَّالِبُ</h2>
+                    <p class="translation">Siswa itu telah duduk.</p>
+                </div>
+            </div>
+            <hr style="margin: 2rem 0; border-bottom: 2px dashed #ccc;">
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">5. Madhi & Mudhari</span><button
+                        class="audio-control audio-btn">▶️ Putar</button></div>
+                <div class="lesson-content">
+                    <h2 class="arabic-text">كَتَبَ ⬅️ يَكْتُبُ</h2>
+                    <p class="translation">Telah menulis ⬅️ Sedang menulis</p>
+                </div>
+            </div>
+            <div class="lesson-card">
+                <div class="lesson-header"><span class="lesson-title">6. Fi'il Amr</span><button
+                        class="audio-control audio-btn">▶️ Putar</button></div>
+                <div class="lesson-content">
+                    <h2 class="arabic-text">! اِذْهَبْ — ! اُكْتُبْ</h2>
+                    <p class="translation">Pergilah! — Tulislah!</p>
+                </div>
+            </div>
+        </div>
+        <footer><span class="ornament">✨</span>
+            <p><small>&copy; 2026 Madrasah Online</small></p>
+        </footer>
+    </div>
+
+    <!-- VIEW: QUIZ -->
+    <div id="v-quiz" class="spa-view">
+        <header>
+            <a href="#" onclick="navigate('home'); return false;" class="back-nav"><i
+                    class="fa-solid fa-arrow-left"></i> Kembali</a>
+            <div class="brand">
+                <h1>Uji Pemahamanmu</h1>
+                <p>Pilih Pelajaran & Level</p>
+            </div>
+        </header>
+        <div class="quiz-container">
+            <div id="setup-screen" class="setup-screen active-screen">
+                <h2 style="color: var(--primary-dark);">Mulai Kuis</h2>
+                <div class="level-btn-group">
+                    <button class="btn-select subject-select" data-val="arab">Bahasa Arab</button>
+                    <button class="btn-select subject-select" data-val="tajwid">Tajwid</button>
+                    <button class="btn-select subject-select" data-val="nahwu">Nahwu Sharaf</button>
+                </div>
+                <div id="level-selection" style="display:none; margin-top: 2rem;">
+                    <p>Pilih Kesulitan:</p>
+                    <div class="level-btn-group">
+                        <button class="btn-select level-select" style="border-color:#22c55e;color:#166534;"
+                            data-val="easy">Mudah</button>
+                        <button class="btn-select level-select" style="border-color:#eab308;color:#854d0e;"
+                            data-val="medium">Sedang</button>
+                        <button class="btn-select level-select" style="border-color:#ef4444;color:#991b1b;"
+                            data-val="hard">Sulit</button>
+                    </div>
+                </div>
+                <button id="btn-start" class="btn-select"
+                    style="margin-top: 3rem; background: var(--primary-dark); color: white; display:none;">Mulai</button>
+            </div>
+            <div id="quiz-screen" class="quiz-screen">
+                <div class="question-card">
+                    <span id="q-progress" class="q-number">...</span>
+                    <h3 id="q-text" class="q-text">Loading...</h3>
+                    <div id="options-container" class="options-grid"></div>
+                </div>
+            </div>
+            <div id="result-screen" class="result-screen">
+                <h2>Kuis Selesai! 🎉</h2>
+                <div class="score-display"><span id="final-score">0</span>%</div>
+                <p id="final-msg" class="score-msg">...</p>
+                <div style="margin-top: 2rem;">
+                    <button onclick="navigate('quiz'); location.reload();" class="btn-select"
+                        style="background: var(--primary); color: white;">Ulangi</button>
+                    <button onclick="navigate('home')" class="btn-select"
+                        style="background:transparent;border-color:#ccc;color:#666;">Ke Beranda</button>
+                </div>
+            </div>
+        </div>
+        <footer><span class="ornament">✨</span>
+            <p><small>&copy; 2026 Madrasah Online</small></p>
+        </footer>
+    </div>
+
+    <!-- JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // TTS
+            if (speechSynthesis.onvoiceschanged !== undefined) { speechSynthesis.onvoiceschanged = () => { window.availableVoices = window.speechSynthesis.getVoices(); }; }
+            window.availableVoices = window.speechSynthesis.getVoices();
+
+            // Listeners
+            document.querySelectorAll('.audio-btn').forEach(b => b.onclick = (e) => { e.stopPropagation(); speakCard(b); });
+            document.querySelectorAll('.btn-play-small').forEach(b => b.onclick = (e) => { e.stopPropagation(); speakRow(b); });
+
+            // Quiz Listeners
+            document.querySelectorAll('.subject-select').forEach(b => b.onclick = () => {
+                document.querySelectorAll('.subject-select').forEach(x => x.classList.remove('selected')); b.classList.add('selected');
+                window.qSub = b.dataset.val; document.getElementById('level-selection').style.display = 'block'; checkQ();
+            });
+            document.querySelectorAll('.level-select').forEach(b => b.onclick = () => {
+                document.querySelectorAll('.level-select').forEach(x => x.classList.remove('selected')); b.classList.add('selected');
+                window.qLev = b.dataset.val; checkQ();
+            });
+            document.getElementById('btn-start').onclick = startQuiz;
+        });
+
+        // --- Navigation ---
+        window.navigate = (view) => {
+            window.scrollTo(0, 0);
+            document.querySelectorAll('.spa-view').forEach(v => v.classList.remove('active'));
+            document.getElementById('v-' + view).classList.add('active');
+        };
+
+        // --- TTS Logic ---
+        function speakCard(btn) {
+            const card = btn.closest('.lesson-card');
+            const rows = card.querySelectorAll('.vocab-arabic');
+            let txt = rows.length ? Array.from(rows).map(r => r.textContent).join('. ') : (card.querySelector('.arabic-text, .tajwid-text')?.textContent || "");
+            if (txt) speak(txt, btn);
+        }
+        function speakRow(btn) {
+            const txt = btn.closest('.vocab-row')?.querySelector('.vocab-arabic')?.textContent;
+            if (txt) speak(txt, btn);
+        }
+        function speak(txt, btn) {
+            window.speechSynthesis.cancel();
+            const old = btn.innerHTML; playing(btn);
+            // Relaxed voice finding: ar-SA -> ar-* -> any
+            const v = window.availableVoices.find(x => x.lang === 'ar-SA') || window.availableVoices.find(x => x.lang.includes('ar'));
+            if (v) {
+                const u = new SpeechSynthesisUtterance(txt); u.voice = v; u.lang = 'ar'; u.rate = 0.8;
+                u.onend = () => reset(btn, old); u.onerror = () => fallback(txt, btn, old);
+                window.speechSynthesis.speak(u);
+            } else { fallback(txt, btn, old); }
+        }
+        function fallback(txt, btn, old) {
+            console.log("Using Fallback TTS (Google)");
+            // Note: meta referrer=no-referrer handles the 403 issue on GitHub Pages
+            try {
+                const a = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(txt)}&tl=ar&client=tw-ob`);
+                a.onended = () => reset(btn, old); a.onerror = () => { alert("Gagal memutar audio. Pastikan koneksi internet."); reset(btn, old); };
+                a.play();
+            } catch (e) { reset(btn, old); }
+        }
+        function playing(b) { b.classList.add('playing'); if (!b.classList.contains('btn-play-small')) { b.innerHTML = '<i class="fa-solid fa-volume-high"></i>...'; b.style.backgroundColor = 'var(--primary)'; b.style.color = '#fff'; } b.disabled = true; }
+        function reset(b, o) { b.classList.remove('playing'); b.innerHTML = o; b.style.backgroundColor = ''; b.style.color = ''; b.disabled = false; }
+
+        // --- Quiz Data & Logic ---
+        const QDATA = {
+            arab: {
+                easy: [{ q: "Arti 'Baitun'?", o: ["Sekolah", "Rumah", "Pasar", "Masjid"], a: 1 }, { q: "'Satu' bahasa Arabnya?", o: ["Wahidun", "Isnan", "Tsalatsah", "Arba'ah"], a: 0 }, { q: "'Qolamun'?", o: ["Pena", "Buku", "Meja", "Pintu"], a: 0 }, { q: "Subahul Khair?", o: ["Malam", "Pagi", "Sore", "Hai"], a: 1 }, { q: "'Ibu'?", o: ["Abun", "Ummun", "Jaddun", "Ammun"], a: 1 }, { q: "'Mata'?", o: ["Ainun", "Anfun", "Famun", "Yadun"], a: 0 }, { q: "'Kabirun'?", o: ["Kecil", "Besar", "Panjang", "Pendek"], a: 1 }],
+                medium: [{ q: "Ana Uhibbu Ummi?", o: ["Sayang Ibu", "Suka makan", "Ke sekolah", "Ini ibuku"], a: 0 }, { q: "Lawan 'Kabirun'?", o: ["Tawilun", "Qashirun", "Saghirun", "Jamilun"], a: 2 }, { q: "'Aina' artinya?", o: ["Kapan", "Dimana", "Apa", "Siapa"], a: 1 }, { q: "Fi'il Madhi 'Menulis'?", o: ["Yaktubu", "Kataba", "Uktub", "Katib"], a: 1 }, { q: "'As-Samaa'?", o: ["Bumi", "Langit", "Matahari", "Bulan"], a: 1 }, { q: "'Kapan'?", o: ["Man", "Kaifa", "Mata", "Kam"], a: 2 }, { q: "Dokter?", o: ["Mudarris", "Tabib", "Muhandis", "Tajir"], a: 1 }],
+                hard: [{ q: "Dzahaba Zaidun ila al-Masjid?", o: ["Ada di masjid", "Pergi ke masjid", "Pulang dari masjid", "Lihat masjid"], a: 1 }, { q: "Jamak Kitabun?", o: ["Kutubun", "Kitabat", "Makatib", "Kutubat"], a: 0 }, { q: "Siapa guru itu? (... Hual Mudarris)", o: ["Ma", "Man", "Aina", "Kaifa"], a: 1 }, { q: "Al-Waqtu kasy-Syaif?", o: ["Waktu bak emas", "Waktu bak pedang", "Sangat berharga", "Cepat"], a: 1 }, { q: "Fi'il Amr 'Dzahaba'?", o: ["Idzhab", "Yadzhabu", "Dzahib", "Madzhab"], a: 0 }, { q: "Laa Ba'sa?", o: ["Tidak apa-apa", "Tidak boleh", "Jangan", "Silakan"], a: 0 }, { q: "Kata Sifat?", o: ["Yakul", "Kursiyyun", "Jamilun", "Min"], a: 2 }]
+            },
+            tajwid: {
+                easy: [{ q: "Nun mati + Hamzah?", o: ["Ikhfa", "Izhhar", "Iqlab", "Idgham"], a: 1 }, { q: "Jml Huruf Qalqalah?", o: ["3", "4", "5", "6"], a: 2 }, { q: "Panjang Mad Thobi'i?", o: ["2", "4", "5", "6"], a: 0 }, { q: "Arti Ikhfa?", o: ["Jelas", "Dengung", "Samar", "Membalik"], a: 2 }, { q: "Huruf Ba hukumnya?", o: ["Izhhar", "Iqlab", "Idgham", "Ikhfa"], a: 1 }, { q: "Ghunnah?", o: ["Jelas", "Samar", "Pantul", "Dengung"], a: 3 }, { q: "Huruf Idgham Bighunnah?", o: ["Lam Ra", "Ya Nun Mim Wau", "Ba", "Hamzah"], a: 1 }],
+                medium: [{ q: "Min Robbihim?", o: ["Idgham Bighunnah", "Idgham Bilaghunnah", "Izhhar", "Ikhfa"], a: 1 }, { q: "Iqlab jika Nun mati + ?", o: ["Ba", "Mim", "Fa", "Wau"], a: 0 }, { q: "Mad Wajib Muttashil?", o: ["2", "2-4", "4-5", "6"], a: 2 }, { q: "Qalqalah Kubra?", o: ["Awal", "Tengah", "Waqaf", "Awal Ayat"], a: 2 }, { q: "Mim mati + Mim?", o: ["Idgham Mimi", "Ikhfa Syafawi", "Izhhar Syafawi", "Iqlab"], a: 0 }, { q: "Jml Huruf Ikhfa?", o: ["10", "13", "15", "14"], a: 2 }, { q: "Contoh Izhhar?", o: ["Min Ba'di", "Min 'Alaq", "Mir Robbihim", "Inna"], a: 1 }],
+                hard: [{ q: "Beda Idgham Big & Bila?", o: ["Panjang", "Dengung", "Huruf", "Tempat"], a: 1 }, { q: "Mad Jaiz Munfashil?", o: ["Hamzah 1 kata", "Hamzah lain kata", "Tasydid", "Sukun"], a: 1 }, { q: "Lam Bismillah?", o: ["Tebal", "Tipis", "Ghunnah", "Qalqalah"], a: 1 }, { q: "Mim mati + Ba?", o: ["Izhhar", "Idgham", "Ikhfa Syafawi", "Iqlab"], a: 2 }, { q: "Mad Lazim Kilmi?", o: ["2", "4", "5", "6"], a: 3 }, { q: "Ra Dhommah?", o: ["Tipis", "Tebal", "Ghunnah", "Qalqalah"], a: 1 }, { q: "Saktah?", o: ["Stop tanpa nafas", "Stop total", "Lanjut", "Dengung"], a: 0 }]
+            },
+            nahwu: {
+                easy: [{ q: "Kalimah dibagi?", o: ["2", "3", "4", "5"], a: 1 }, { q: "Masjidun?", o: ["Fi'il", "Harf", "Isim", "Jumlah"], a: 2 }, { q: "'Di' (Fi)?", o: ["Isim", "Fi'il", "Harf", "Dhomir"], a: 2 }, { q: "Fi'il artinya?", o: ["Benda", "Kerja", "Sambung", "Sifat"], a: 1 }, { q: "Tanda Rafa?", o: ["Fathah", "Kasrah", "Dhommah", "Sukun"], a: 2 }, { q: "Zaidun dhommah krn?", o: ["Isim", "Fi'il", "Harf", "Mabni"], a: 0 }, { q: "Isim tunggal?", o: ["Mufrad", "Mutsanna", "Jamak", "Mudzakkar"], a: 0 }],
+                medium: [{ q: "Mubtada Khobar?", o: ["Manshub", "Majrur", "Marfu", "Jazm"], a: 2 }, { q: "Zaidun di 'Dzahaba Zaidun'?", o: ["Mubtada", "Khobar", "Fa'il", "Maf'ul"], a: 2 }, { q: "Huruf Mudhara'ah?", o: ["3", "4", "5", "6"], a: 1 }, { q: "Isim ada Alif Lam?", o: ["Fathah", "Kasrah", "Dhommah", "Tidak Tanwin"], a: 3 }, { q: "Kata ganda?", o: ["Mufrad", "Jamak", "Mutsanna", "Lima"], a: 2 }, { q: "Harf Jar bikin isim?", o: ["Marfu", "Manshub", "Majrur", "Jazm"], a: 2 }, { q: "Tanda Nashob?", o: ["Fathah", "Kasrah", "Dhommah", "Sukun"], a: 0 }],
+                hard: [{ q: "Hukum Maf'ul Bih?", o: ["Marfu", "Manshub", "Majrur", "Jazm"], a: 1 }, { q: "Isim Ghairu Munsharif?", o: ["No Tanwin", "No Alif Lam", "Mabni", "Marfu"], a: 0 }, { q: "Hukum Fi'il Madhi?", o: ["Murab", "Mabni", "Manshub", "Majrur"], a: 1 }, { q: "Kana merubah?", o: ["Mubtada jadi Manshub", "Khobar jadi Manshub", "Fa'il jadi Manshub", "Khobar jadi Majrur"], a: 1 }, { q: "Tanda Jamak Mudzakkar?", o: ["Alif Ta", "Wau Nun", "Ya Nun", "Alif Nun"], a: 1 }, { q: "Asmaul Khomsah Rafa?", o: ["Dhommah", "Alif", "Wau", "Nun"], a: 2 }, { q: "Fi'il Mudhari Majzum?", o: ["Ada Lan", "Ada Lam", "Ada An", "Ada Inna"], a: 1 }]
+            }
+        };
+
+        let qQ = [], qIdx = 0, qScore = 0;
+        const audio = new (window.AudioContext || window.webkitAudioContext)();
+        function checkQ() { if (window.qSub && window.qLev) document.getElementById('btn-start').style.display = 'inline-block'; }
+        function startQuiz() {
+            if (!QDATA[window.qSub]) return;
+            qQ = [...QDATA[window.qSub][window.qLev]]; qIdx = 0; qScore = 0;
+            switchScreen('quiz-screen'); renderQ();
+        }
+        function renderQ() {
+            const d = qQ[qIdx];
+            document.getElementById('q-progress').textContent = `Soal ${qIdx + 1}/${qQ.length}`;
+            document.getElementById('q-text').textContent = d.q;
+            const c = document.getElementById('options-container'); c.innerHTML = '';
+            d.o.forEach((t, i) => {
+                const b = document.createElement('button'); b.className = 'option-btn'; b.textContent = t;
+                b.onclick = () => ans(i, d.a, b); c.appendChild(b);
+            });
+        }
+        function ans(sel, cor, btn) {
+            document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+            if (sel === cor) { btn.classList.add('correct'); qScore++; playS(1); }
+            else { btn.classList.add('wrong'); document.querySelectorAll('.option-btn')[cor].classList.add('correct'); playS(0); }
+            setTimeout(() => { qIdx++; if (qIdx < qQ.length) renderQ(); else finish(); }, 1200);
+        }
+        function finish() {
+            switchScreen('result-screen');
+            const p = Math.round((qScore / qQ.length) * 100);
+            document.getElementById('final-score').textContent = p;
+            document.getElementById('final-msg').textContent = p === 100 ? "Sempurna!" : p >= 80 ? "Mumtaz!" : p >= 60 ? "Bagus!" : "Belajar lagi ya!";
+        }
+        function switchScreen(id) {
+            ['setup-screen', 'quiz-screen', 'result-screen'].forEach(i => document.getElementById(i).style.display = 'none');
+            const e = document.getElementById(id); e.style.display = 'block'; e.classList.add('active-screen');
+        }
+        function playS(ok) {
+            if (audio.state === 'suspended') audio.resume();
+            const o = audio.createOscillator(), g = audio.createGain();
+            o.connect(g); g.connect(audio.destination);
+            if (ok) { o.type = 'sine'; o.frequency.setValueAtTime(523, audio.currentTime); o.frequency.exponentialRampToValueAtTime(1046, audio.currentTime + 0.1); g.gain.setValueAtTime(0.3, audio.currentTime); g.gain.exponentialRampToValueAtTime(0.01, audio.currentTime + 0.5); o.start(); o.stop(audio.currentTime + 0.5); }
+            else { o.type = 'sawtooth'; o.frequency.setValueAtTime(150, audio.currentTime); o.frequency.linearRampToValueAtTime(100, audio.currentTime + 0.3); g.gain.setValueAtTime(0.2, audio.currentTime); g.gain.exponentialRampToValueAtTime(0.01, audio.currentTime + 0.3); o.start(); o.stop(audio.currentTime + 0.3); }
+        }
+    </script>
+</body>
+
+</html>

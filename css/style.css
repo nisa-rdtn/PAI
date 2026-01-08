@@ -1,0 +1,460 @@
+/* 
+ * Madrasah Online - Main Stylesheet 
+ * Colors: Emerald (#00695c), Gold (#d4af37), White (#ffffff), Dark Blue (#0f172a)
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+    --primary: #00695c;
+    --primary-dark: #004d40;
+    --primary-light: #4db6ac;
+    --accent-gold: #d4af37;
+    --accent-blue: #1e293b;
+
+    --bg-body: #f8f9fa;
+    --bg-card: #ffffff;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+
+    --font-latin-heading: 'Poppins', sans-serif;
+    --font-latin-body: 'Lora', serif;
+    --font-arabic: 'Amiri', serif;
+
+    --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-latin-body);
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    line-height: 1.6;
+    background-image:
+        radial-gradient(circle at 100% 100%, rgba(212, 175, 55, 0.05) 0, rgba(212, 175, 55, 0.05) 10px, transparent 10px),
+        radial-gradient(circle at 0 0, rgba(0, 105, 92, 0.05) 0, rgba(0, 105, 92, 0.05) 10px, transparent 10px);
+    background-size: 40px 40px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    padding: 1.5rem 0;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: repeating-linear-gradient(45deg,
+            var(--accent-gold),
+            var(--accent-gold) 10px,
+            transparent 10px,
+            transparent 20px);
+}
+
+.brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-icon {
+    font-size: 2.5rem;
+    color: var(--accent-gold);
+}
+
+header h1 {
+    font-family: var(--font-latin-heading);
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+header p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+/* Nav */
+.back-nav {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    color: white;
+    text-decoration: none;
+    font-family: var(--font-latin-heading);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.back-nav:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+}
+
+@media (max-width: 600px) {
+    .back-nav {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        display: inline-flex;
+        margin-top: 1rem;
+    }
+}
+
+/* Container */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    flex: 1;
+}
+
+/* Cards (Home) */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent-gold);
+}
+
+.card-header {
+    height: 120px;
+    background: var(--bg-body);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-icon {
+    font-size: 3rem;
+    color: var(--primary);
+    z-index: 1;
+}
+
+.card-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    background: radial-gradient(circle, var(--primary) 2px, transparent 2.5px);
+    background-size: 20px 20px;
+}
+
+.card-body {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.card h3 {
+    font-family: var(--font-latin-heading);
+    font-size: 1.25rem;
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+}
+
+.card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Lesson Content */
+.lesson-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-soft);
+    border-right: 4px solid var(--primary);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.lesson-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+}
+
+.lesson-title {
+    font-family: var(--font-latin-heading);
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.arabic-text {
+    font-family: var(--font-arabic);
+    font-size: 2.2rem;
+    color: var(--primary-dark);
+    text-align: right;
+    direction: rtl;
+    line-height: 1.8;
+    margin: 0.5rem 0;
+}
+
+.transliteration {
+    font-style: italic;
+    color: var(--accent-blue);
+    font-weight: 600;
+}
+
+.translation {
+    color: var(--text-muted);
+}
+
+.analysis-box {
+    background: #f1f8e9;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.analysis-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--primary);
+    color: white;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* Vocabulary List Styling */
+.vocab-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.vocab-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    transition: background 0.2s;
+}
+
+.vocab-row:hover {
+    background: #f0fdf4;
+    border-color: var(--primary-light);
+}
+
+.vocab-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.vocab-arabic {
+    font-family: var(--font-arabic);
+    font-size: 1.6rem;
+    color: var(--primary-dark);
+    line-height: 1.2;
+    text-align: right;
+    direction: rtl;
+}
+
+.vocab-mean {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-align: right;
+}
+
+.btn-play-small {
+    background: white;
+    border: 1px solid #ddd;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--primary);
+    margin-right: 12px;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    outline: none;
+}
+
+.btn-play-small:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.btn-play-small.playing {
+    background: var(--accent-gold);
+    color: white;
+    border-color: var(--accent-gold);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(212, 175, 55, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+    }
+}
+
+/* Tajwid Coloring */
+.tajwid-text {
+    font-family: var(--font-arabic);
+    font-size: 2.5rem;
+    text-align: center;
+    direction: rtl;
+    line-height: 2;
+}
+
+.tajwid-rule {
+    position: relative;
+    cursor: help;
+    padding: 0 2px;
+    border-radius: 4px;
+}
+
+.rule-ghunnah {
+    color: #d81b60;
+    background: rgba(216, 27, 96, 0.1);
+}
+
+.rule-idgham {
+    color: #1e88e5;
+    background: rgba(30, 136, 229, 0.1);
+}
+
+.rule-ikhfa {
+    color: #43a047;
+    background: rgba(67, 160, 71, 0.1);
+}
+
+.rule-mad {
+    color: #f9a825;
+    background: rgba(249, 168, 37, 0.1);
+}
+
+.rule-qalqalah {
+    color: #8e24aa;
+    background: rgba(142, 36, 170, 0.1);
+}
+
+/* Audio Player */
+.audio-control {
+    background: var(--bg-body);
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    padding: 5px 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    color: var(--primary-dark);
+    font-family: var(--font-latin-heading);
+    outline: none;
+}
+
+.audio-control:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.audio-control i {
+    font-size: 1rem;
+}
+
+/* Footer */
+footer {
+    background: var(--primary-dark);
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: auto;
+    font-size: 0.9rem;
+}
+
+footer .ornament {
+    color: var(--accent-gold);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .arabic-text {
+        font-size: 1.8rem;
+    }
+
+    .tajwid-text {
+        font-size: 2rem;
+    }
+}

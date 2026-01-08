@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ilmu Tajwid Dasar - Madrasah Online</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .legend-box {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="index.html" class="back-nav"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
+        <div class="brand">
+            <h1>Ilmu Tajwid Dasar</h1>
+            <p>Panduan Membaca Al-Qur'an dengan Fasih</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="legend-box">
+            <div class="legend-item"><span class="dot" style="background:var(--primary)"></span> Ikhfa (Samar)</div>
+            <div class="legend-item"><span class="dot" style="background:#1e88e5"></span> Idgham (Lebur)</div>
+            <div class="legend-item"><span class="dot" style="background:#d81b60"></span> Ghunnah (Dengung)</div>
+            <div class="legend-item"><span class="dot" style="background:#f9a825"></span> Mad (Panjang)</div>
+            <div class="legend-item"><span class="dot" style="background:#8e24aa"></span> Qalqalah (Pantul)</div>
+        </div>
+
+        <!-- 1. Izhhar Halqi -->
+        <div class="lesson-card">
+            <div class="lesson-header">
+                <span class="lesson-title">1. Izhhar Halqi (Jelas)</span>
+                <button class="audio-control audio-btn" data-src="assets/audio/tajwid_izhhar.mp3">▶️ Putar</button>
+            </div>
+            <div class="lesson-content">
+                <p>Nun sukun atau tanwin bertemu huruf halqi (ء هـ ع ح غ خ). Dibaca jelas tanpa dengung.</p>
+                <h2 class="tajwid-text">
+                    1. مِنْ خَوْفٍ
+                </h2>
+                <h2 class="tajwid-text" style="font-size: 2rem;">
+                    2. مَنْ آمَنَ
+                </h2>
+                <h2 class="tajwid-text" style="font-size: 2rem;">
+                    3. مِنْ عَلَقٍ
+                </h2>
+                <div class="analysis-box">
+                    <p><span class="analysis-tag">Cara Baca</span> "Min khaufin"</p>
+                    <p><span class="analysis-tag">Cara Baca</span> "Man Aamana"</p>
+                    <p><span class="analysis-tag">Cara Baca</span> "Min 'Alaq"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Idgham Bighunnah -->
+        <div class="lesson-card">
+            <div class="lesson-header">
+                <span class="lesson-title">2. Idgham Bighunnah (Lebur + Dengung)</span>
+                <button class="audio-control audio-btn" data-src="assets/audio/tajwid_idghambig.mp3">▶️ Putar</button>
+            </div>
+            <div class="lesson-content">
+                <p>Nun sukun atau tanwin bertemu (ي ن م و). Dibaca lebur dan ditahan 2 harakat.</p>
+                <h2 class="tajwid-text">
+                    1. <span class="tajwid-rule rule-idgham">مَن يَ</span>قُولُ
+                </h2>
+                <h2 class="tajwid-text" style="font-size: 2rem;">
+                    2. مِمَّن <span class="tajwid-rule rule-idgham">مَّ</span>نَعَ
+                </h2>
+                <h2 class="tajwid-text" style="font-size: 2rem;">
+                    3. مِّن <span class="tajwid-rule rule-idgham">وَّ</span>رَائِهِم
+                </h2>
+                <div class="analysis-box">
+                    <p><span class="analysis-tag">Cara Baca</span> "May-yaquulu"</p>
+                    <p><span class="analysis-tag">Cara Baca</span> "Mimman-mana'a"</p>
+                    <p><span class="analysis-tag">Cara Baca</span> "Miwwaraa-ihim"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Idgham Bilaghunnah -->
+        <div class="lesson-card">
+            <div class="lesson-header">
+                <span class="lesson-title">3. Idgham Bilaghunnah (Lebur Tanpa Dengung)</span>
+                <button class="audio-control audio-btn" data-src="assets/audio/tajwid_idghambil.mp3">▶️ Putar</button>
+            </div>
+            <div class="lesson-content">
+                <p>Nun sukun atau tanwin bertemu (ل ر). Dibaca lebur sempurna tanpa ditahan.</p>
+                <h2 class="tajwid-text">
+                    1. <span class="tajwid-rule rule-idgham">مِن رَّ</span>بِّهِمْ
+                </h2>
+                <h2 class="tajwid-text" style="font-size: 2rem;">
+                    2. غَفُورٌ <span class="tajwid-rule rule-idgham">رَّ</span>حِيمٌ
+                </h2>
+                <h2 class="tajwid-text" style="font-size: 2rem;">
+                    3. مِن <span class="tajwid-rule rule-idgham">لَّ</span>دُنْك
+                </h2>
+                <div class="analysis-box">
+                    <p><span class="analysis-tag">Cara Baca</span> "Mir-robbihim"</p>
+                    <p><span class="analysis-tag">Cara Baca</span> "Ghofuurur-rohiim"</p>
+                    <p><span class="analysis-tag">Cara Baca</span> "Milladunka"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Iqlab -->
+        <div class="lesson-card">
+            <div class="lesson-header">
+                <span class="lesson-title">4. Iqlab (Ganti Bunyi Mim)</span>
+                <button class="audio-control audio-btn" data-src="assets/audio/tajwid_iqlab.mp3">▶️ Putar</button>
+            </div>
+            <div class="lesson-content">
+                <p>Nun sukun atau tanwin bertemu (ب). Bunyi 'n' berubah menjadi 'm' samar.</p>
+                <h2 class="tajwid-text">
+                    1. <span class="tajwid-rule rule-ghunnah">مِنۢ بَ</span>عْدِ
+                </h2>
+                <h2 class="tajwid-text" style="font-size: 2rem;">
+                    2. سَمِيعٌ<span class="tajwid-rule rule-ghunnah">ۢ بَ</span>صِيرٌ
+                </h2>
+                <h2 class="tajwid-text" style="font-size: 2rem;">
+                    3. لَنَسْفَعً<span class="tajwid-rule rule-ghunnah">ا بِ</span>النَّاصِيَةِ
+                </h2>
+                <div class="analysis-box">
+                    <p><span class="analysis-tag">Cara Baca</span> "Mim-ba'di"</p>
+                    <p><span class="analysis-tag">Cara Baca</span> "Samii'um-bashiir"</p>
+                    <p><span class="analysis-tag">Cara Baca</span> "Lanasfa'am-binnaasiyah"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Ikhfa Haqiqi -->
+        <div class="lesson-card">
+            <div class="lesson-header">
+                <span class="lesson-title">5. Ikhfa Haqiqi (Samar)</span>
+                <button class="audio-control audio-btn" data-src="assets/audio/tajwid_ikhfa.mp3">▶️ Putar</button>
+            </div>
+            <div class="lesson-content">
+                <p>Nun sukun atau tanwin bertemu 15 huruf ikhfa. Dibaca samar antara 'n' dan 'ng'.</p>
+                <h2 class="tajwid-text">
+                    1. <span class="tajwid-rule rule-ikhfa">أَنفُ</span>سَهُمْ
+                </h2>
+                <h2 class="tajwid-text" style="font-size: 2rem;">
+                    2. <span class="tajwid-rule rule-ikhfa">مِن قَ</span>بْلِ
+                </h2>
+                <h2 class="tajwid-text" style="font-size: 2rem;">
+                    3. <span class="tajwid-rule rule-ikhfa">كُنتُ</span>مْ
+                </h2>
+                <div class="analysis-box">
+                    <p><span class="analysis-tag">Cara Baca</span> "Ang-fusahum"</p>
+                    <p><span class="analysis-tag">Cara Baca</span> "Ming-qobli"</p>
+                    <p><span class="analysis-tag">Cara Baca</span> "Kung-tum"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Ghunnah -->
+        <div class="lesson-card">
+            <div class="lesson-header">
+                <span class="lesson-title">6. Ghunnah Musyaddadah</span>
+                <button class="audio-control audio-btn" data-src="assets/audio/tajwid_ghunnah.mp3">▶️ Putar</button>
+            </div>
+            <div class="lesson-content">
+                <p>Huruf Nun atau Mim bertasydid. Didengungkan kuat 2-3 harakat.</p>
+                <h2 class="tajwid-text">
+                    <span class="tajwid-rule rule-ghunnah">إِنَّ</span> الَّذِينَ
+                </h2>
+                <div class="analysis-box">
+                    <span class="analysis-tag">Cara Baca</span> "Inna" (tahan 'nnnn').
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. Mad Thobi'i -->
+        <div class="lesson-card">
+            <div class="lesson-header">
+                <span class="lesson-title">7. Mad Thobi'i (Asli)</span>
+                <button class="audio-control audio-btn" data-src="assets/audio/tajwid_madt.mp3">▶️ Putar</button>
+            </div>
+            <div class="lesson-content">
+                <p>Dipanjangkan 2 harakat (Alif sebelumnya fathah, Ya sukun sebelumnya kasrah, Wawu sukun sebelumnya
+                    dhommah).</p>
+                <h2 class="tajwid-text">
+                    <span class="tajwid-rule rule-mad">نُو</span><span class="tajwid-rule rule-mad">حِي</span><span
+                        class="tajwid-rule rule-mad">هَا</span>
+                </h2>
+                <div class="analysis-box">
+                    <span class="analysis-tag">Cara Baca</span> "Nuu-hii-haa".
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. Qalqalah -->
+        <div class="lesson-card">
+            <div class="lesson-header">
+                <span class="lesson-title">8. Qalqalah (Pantulan)</span>
+                <button class="audio-control audio-btn" data-src="assets/audio/tajwid_qalqalah.mp3">▶️ Putar</button>
+            </div>
+            <div class="lesson-content">
+                <p>Huruf (ق ط ب ج د) saat sukun/mati. Dipantulkan bunyinya.</p>
+                <h2 class="tajwid-text">
+                    قُلْ هُوَ اللَّهُ <span class="tajwid-rule rule-qalqalah">أَحَدٌ</span>
+                </h2>
+                <div class="analysis-box">
+                    <span class="analysis-tag">Cara Baca</span> "Ahad-d" (pantulan di akhir).
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <span class="ornament">✨</span>
+        <p><small>&copy; 2026 Madrasah Online</small></p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
